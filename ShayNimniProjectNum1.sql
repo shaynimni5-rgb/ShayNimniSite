@@ -1,18 +1,16 @@
 --*** SHAY NIMNI POJECT 1- Creating DataBase***--
---ä÷åáõ äî÷åøé äåà ÷åáõ SQL áâìì äøùàåú äòìàä ìàúø ùåä ìè÷ñè
 create database RETAIL_SALES
 go
 use RETAIL_SALES
 go
---***äèáìä äæå îöéâä àú äì÷åçåú ùì äçáøä***--
+--***This table represents the company's employees***--
 create table rs_customers(
 customer_id int primary key identity(1,1),
 customer_name nvarchar(50),
 phone int,
 address nvarchar(50)
 )
- --***äèáìä äæå îöéâä àú ääæîðåú ùì ì÷åçåú äçáøä***--
- --èáìú ääæîðåú î÷åùøú ìèáìú äì÷åçåú îäîçùáä ùëì äæîðä îçåéáú ìäéåú îùåéëú ìì÷åç ëìùäå 
+ --***This table shows the company's customer orders***--
 create table rs_orders(
 order_id int primary key identity(1000,1),
 order_date datetime default getdate(),
@@ -20,14 +18,13 @@ purchase_price money default 100,
 customer_id int references rs_customers(customer_id)
 )
 
-  --***äèáìä äæå îöéâä àú ä÷èâéåøéåú ùì ëì îåöø ìãåâîà çåìöåú,îëðñéí åëå***--
+  --***This table shows the categories of each product, for example, shirts, pants, etc***--
 create table rs_categories(
 category_id int primary key identity(10,1),
 category_name nvarchar(80)
 )
 
---***äèáìä äæå îöéâä àú äôøéèéí äðîëøéí áçáøä***--
--- èáìú äîåöøéí î÷åùøú ìèáìú ä÷èâåøéåú îäîçùáä ùëì îåöø îùåééê ì÷èâåøéä îñåéîú òì îðú ìéöåø ñãø ìãáøéí
+--***This table shows the items sold in the company***--
 create table rs_products(
 product_id int primary key identity(200,1),
 product_name nvarchar(80) not null,
@@ -36,8 +33,7 @@ product_in_stock int not null default 0,
 category_id int references rs_categories(category_id)
 )
 
- --***äèáìä äæå îöéâä ìàéæä èøðã àåôðä ëì ôøèé ùééê***--
---äèáìä äæå î÷åùøú ìèáìú îåöøéí îëéååï ùòì îðú ìäøàåú èøðãéí öøéê ì÷ùø ëì èøðã ìîåöø
+ --***This table shows which fashion trend each item belongs to***--
 create table rs_fashion_trends(
 trend_id int primary key identity(300,2),
 trend_name nvarchar(100) not null,
@@ -47,10 +43,7 @@ description nvarchar(100),
 product_id int references rs_products(product_id)
 )
 
---***äèáìä äæå îöéâä àú äôøèéí ùì ëì äæîðä ùáåöò ëîå äôøéèéí ùðøëùå åäëîåú***--
---èáìú ôøèé ääæîðåú î÷åùøú ìèáìú äîåöøéí
---îëéååï ùáîéãä åàðçðå øåöéí ìôøè îä äåæîï áëì äæîðä àðçðå öøéëéí ìäáéï àéìå îåöøéí äéå áä
---äèáìä äæå âí î÷åùøú ìèáìú ääæîðåú îëéååï ùòì îðú ùðåëì ìôøè îä ðøëù áëì äæîðä àðçðå öøéëéí ìãòú ìàéæå èáìä äåà î÷åùø
+--***This table displays the details of each order made, such as the items purchased and the quantity.***--
 create table rs_order_details(
 order_details_id int primary key identity(1,1),
 quantity int not null default 0,
@@ -59,7 +52,7 @@ order_id int references rs_orders(order_id),
 product_id int references rs_products(product_id)
 )
 
---ä÷ùøéí áéï äèáìàåú äéðí:
+--The relationships between the tables are:
 -- rs_orders >> rs_customers
 -- rs_products >> rs_categories
 -- rs_fashion_trends >> rs_products
@@ -222,4 +215,5 @@ values
 ('sustainable','spring','2020','Eco-friendly materials and ethically made fashion',212),
 ('sustainable','summer','2020','Eco-friendly materials and ethically made fashion',217),
 ('sustainable','summer','2020','Eco-friendly materials and ethically made fashion',219);
+
 
